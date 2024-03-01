@@ -14,7 +14,7 @@ import { createVuetify } from "vuetify";
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
   theme: {
-    defaultTheme: "light",
+    defaultTheme: "light", // mint on radix-ui
     themes: {
       light: {
         colors: {
@@ -33,17 +33,17 @@ export default createVuetify({
       },
       dark: {
         colors: {
-          background: "#F9F9F9", // App background 1 or 2
-          "component-background": "#F0F0F0", // Interactive components 3
-          "component-background-hover": "#E8E8E8", // Interactive components 4
-          "component-background-pressed": "#E0E0E0", // Interactive components 5
-          "border-color": "#D9D9D9", // Borders and separators 6
-          "border-interactive-color": "#CECECE", // Borders and separators 7
-          "border-interactive-stronger-color": "#BBBBBB", // Borders and separators 8
-          "solid-background": "##8D8D8D", // Solid backgrounds, disabled text 9
-          "solid-background-hover": "#F2F2F2", // Solid backgrounds, disabled text 10
-          "text-color-low-contrast": "#646464", // Text 11
-          "text-color-high-contrast": "#202020", // Text 12
+          background: "#0E1515", // App background 1 or 2
+          "component-background": "#092C2B", // Interactive components 3
+          "component-background-hover": "#003A38", // Interactive components 4
+          "component-background-pressed": "#004744", // Interactive components 5
+          "border-color": "#105650", // Borders and separators 6
+          "border-interactive-color": "#1E685F", // Borders and separators 7
+          "border-interactive-stronger-color": "#277F70", // Borders and separators 8
+          "solid-background": "#86EAD4", // Solid backgrounds, disabled text 9
+          "solid-background-hover": "#A8F5E5", // Solid backgrounds, disabled text 10
+          "text-color-low-contrast": "#58D5BA", // Text 11
+          "text-color-high-contrast": "#C4F5E1", // Text 12
         },
       },
     },

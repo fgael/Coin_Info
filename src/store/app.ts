@@ -1,8 +1,14 @@
 // Utilities
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useAppStore = defineStore('app', {
+export const useApiStatusStore = defineStore("apiStatus", {
   state: () => ({
-    //
+    online: false,
   }),
-})
+
+  actions: {
+    setOnline(online: boolean) {
+      this.online = online;
+    },
+  },
+});
