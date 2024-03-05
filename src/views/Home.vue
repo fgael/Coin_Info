@@ -9,7 +9,7 @@
         md="6"
       >
         <router-link :to="{ name: 'CoinDetail', params: { id: coin.id } }">
-          <v-card>
+          <v-card class="rounded-xl" elevation="0">
             <v-card-title>
               <v-avatar density="compact">
                 <v-img :src="coin.image" />
@@ -45,8 +45,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { fetchApiStatus, fetchCoinList } from "@/services/api";
-import { useApiStatusStore } from "@/store/app";
+import { fetchCoinList } from "@/services/api";
 
 interface Coin {
   id: string;
@@ -57,18 +56,11 @@ interface Coin {
   price_change_percentage_24h: number;
 }
 
-const apiStatusStore = useApiStatusStore();
-
 const coinList = ref<Array<Coin>>([]);
 
 onMounted(async () => {
-  const isApiOnline = await fetchApiStatus();
-  apiStatusStore.setOnline(isApiOnline);
-
-  if (isApiOnline) {
-    coinList.value = await fetchCoinList();
-    console.log(coinList.value);
-  }
+  coinList.value = await fetchCoinList();
+  console.log(coinList.value);
 });
 </script>
 <style scoped>

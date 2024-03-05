@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar app class="bg-light-background" elevation="0">
     <!-- <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon> -->
     <!-- <v-img
       src="/path/to/your/logo.png"
@@ -10,19 +10,17 @@
 
     <v-app-bar-title>
       <v-toolbar-title>
-        <router-link :to="{ name: 'Home' }" class="text-decoration-none"
-          >Coin Info</router-link
-        ></v-toolbar-title
-      >
+        <router-link
+          :to="{ name: 'Home' }"
+          class="text-decoration-none text-color-high-contrast"
+          >Coin<b class="text-green">Info</b></router-link
+        >
+      </v-toolbar-title>
     </v-app-bar-title>
     <v-spacer></v-spacer>
-    <v-chip
-      :prepend-icon="icon"
-      :color="apiStatusStore.online ? 'green' : 'red'"
-    >
+    <v-chip :prepend-icon="icon" :color="apiStatus ? 'green' : 'red'">
       {{ apiStatusText }}
     </v-chip>
-    <!-- Boutons à droite -->
     <v-btn class="ml-2" density="compact" icon @click="toggleTheme">
       <v-icon size="small">{{
         darkTheme ? "mdi-weather-night" : "mdi-white-balance-sunny"
@@ -32,13 +30,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, onMounted } from "vue";
 import { useTheme } from "vuetify";
-import { useApiStatusStore } from "@/store/app";
 
 const theme = useTheme();
 const darkTheme = ref(false);
-const apiStatusStore = useApiStatusStore();
+const apiStatus = ref(false);
 const icon = ref("");
 
 const toggleTheme = () => {
@@ -49,9 +46,17 @@ const toggleTheme = () => {
 // Computed properties to display text and color of the API status
 const apiStatusText = ref("API Offline");
 
+onMounted(() => {
+  const cachedApiStatus = localStorage.getItem("apiCache_apiStatus");
+  if (cachedApiStatus) {
+    apiStatus.value = JSON.parse(cachedApiStatus);
+  }
+});
+
 // Observe the API status and update the V-Chip accordingly
 watchEffect(() => {
-  if (apiStatusStore.online) {
+  console.log(apiStatus.value);
+  if (apiStatus.value) {
     apiStatusText.value = "API Online";
     icon.value = "mdi-check-network-outline";
   } else {

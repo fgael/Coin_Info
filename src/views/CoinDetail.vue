@@ -9,10 +9,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { fetchCoin, fetchApiStatus } from "@/services/api";
-import { useApiStatusStore } from "@/store/app";
-
-const apiStatusStore = useApiStatusStore();
+import { fetchCoin } from "@/services/api";
 
 const coinId = ref("");
 const coin = ref<Coin | null>(null);
@@ -35,13 +32,7 @@ onMounted(async () => {
     ? routeParamsId[0]
     : routeParamsId;
 
-  const isApiOnline = await fetchApiStatus();
-  apiStatusStore.setOnline(isApiOnline);
-
-  if (isApiOnline) {
-    // Appel pour obtenir les détails d'une pièce spécifique par ID
-    coin.value = await fetchCoin(coinId.value);
-    console.log(coin.value);
-  }
+  // Fetch the coin details
+  coin.value = await fetchCoin(coinId.value);
 });
 </script>
