@@ -1,5 +1,10 @@
 <template>
-  <v-app-bar app class="bg-light-background" elevation="0">
+  <v-app-bar
+    app
+    class="bg-light-background"
+    elevation="1"
+    :style="{ position: 'fixed', top: '0', width: '100%', zIndex: '1000' }"
+  >
     <!-- <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon> -->
     <!-- <v-img
       src="/path/to/your/logo.png"
