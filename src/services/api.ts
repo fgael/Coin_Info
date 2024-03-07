@@ -1,13 +1,12 @@
 import axios, { AxiosInstance } from "axios";
 
-// Helper function to cache API calls for 30 seconds
 const cacheWrapper = (apiFunction: (...args: any[]) => Promise<any>) => {
   const cache: { [key: string]: { data: any; timestamp: number } } = {};
 
   return async (...args: any[]) => {
     const key = JSON.stringify(args);
 
-    if (cache[key] && Date.now() - cache[key].timestamp < 30000) {
+    if (cache[key] && Date.now() - cache[key].timestamp < 45000) {
       return cache[key].data;
     }
 
@@ -33,22 +32,25 @@ export const fetchApiStatus = cacheWrapper(async () => {
       x_cg_demo_api_key: process.env.VITE_APP_COINGECKO_API_KEY,
     },
   });
-  console.log(response.status);
-  console.log(response.data);
   return response.status === 200;
 });
 
-export const fetchCoinList = cacheWrapper(async () => {
-  const response = await apiClient.get(
-    "/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=25&page=1&sparkline=false&locale=en",
-    {
+export const fetchCoinList = cacheWrapper(
+  async (currency: string, page: number, perPage: number) => {
+    const response = await apiClient.get("/coins/markets", {
       params: {
+        vs_currency: currency,
+        order: "market_cap_desc",
+        per_page: perPage,
+        page: page,
+        sparkline: false,
+        locale: "en",
         x_cg_demo_api_key: process.env.VITE_APP_COINGECKO_API_KEY,
       },
-    }
-  );
-  return response.data;
-});
+    });
+    return response.data;
+  }
+);
 
 export const fetchCoin = cacheWrapper(async (id: string) => {
   const response = await apiClient.get(`/coins/${id}`, {

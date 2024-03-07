@@ -8,14 +8,14 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@mdi/font": "7.0.96",
+    "@mdi/font": "^7.4.47",
     "axios": "^1.6.7",
     "mitt": "^3.0.1",
     "roboto-fontface": "*",
     "sass": "^1.71.1",
-    "vue": "^3.2.0",
-    "vue-router": "^4.0.0",
-    "vuetify": "^3.0.0",
+    "vue": "^3.4.21",
+    "vue-router": "4.3",
+    "vuetify": "^3.5.8",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {

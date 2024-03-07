@@ -23,7 +23,7 @@
       </v-toolbar-title>
     </v-app-bar-title>
     <v-spacer></v-spacer>
-    <v-chip :prepend-icon="icon" :color="apiStatus ? 'green' : 'red'">
+    <v-chip :prepend-icon="apiIcon" :color="apiOnline ? 'green' : 'red'">
       {{ apiStatusText }}
     </v-chip>
     <v-btn class="ml-2" density="compact" icon @click="toggleTheme">
@@ -35,13 +35,13 @@
 </template>
 
 <script setup lang="ts">
+import { fetchApiStatus } from "@/services/api";
 import { ref, watchEffect, onMounted } from "vue";
 import { useTheme } from "vuetify";
 
 const theme = useTheme();
 const darkTheme = ref(false);
-const apiStatus = ref(false);
-const icon = ref("");
+const apiOnline = ref(false);
 
 const toggleTheme = () => {
   darkTheme.value = !darkTheme.value;
@@ -50,23 +50,17 @@ const toggleTheme = () => {
 
 // Computed properties to display text and color of the API status
 const apiStatusText = ref("API Offline");
+const apiIcon = ref("mdi-close-network");
 
-onMounted(() => {
-  const cachedApiStatus = localStorage.getItem("apiCache_apiStatus");
-  if (cachedApiStatus) {
-    apiStatus.value = JSON.parse(cachedApiStatus);
-  }
+onMounted(async () => {
+  apiOnline.value = await fetchApiStatus();
 });
 
 // Observe the API status and update the V-Chip accordingly
 watchEffect(() => {
-  console.log(apiStatus.value);
-  if (apiStatus.value) {
+  if (apiOnline.value) {
     apiStatusText.value = "API Online";
-    icon.value = "mdi-check-network-outline";
-  } else {
-    apiStatusText.value = "API Offline";
-    icon.value = "mdi-close-network";
+    apiIcon.value = "mdi-check-network-outline";
   }
 });
 </script>
