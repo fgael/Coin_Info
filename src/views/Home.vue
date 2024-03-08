@@ -12,12 +12,12 @@
             <v-toolbar-title class="text-start">
               Top 100 crypto list
             </v-toolbar-title>
-            <div class="d-flex">
+            <div class="d-flex align-center">
+              <p class="mr-3">Items</p>
               <v-select
                 v-model="itemsPerPage"
                 class="mr-4"
                 variant="outlined"
-                label="Items per page"
                 density="compact"
                 :hide-details="true"
                 :items="itemsPerPageOptions"
@@ -129,6 +129,7 @@
         <v-pagination
           v-model="currentPage"
           :length="pageNumber"
+          :total-visible="7"
           class="my-2"
           @update:modelValue="updatePage"
         />
@@ -146,7 +147,7 @@ const itemsPerPage = ref(10);
 const loading = ref(false);
 const pageNumber = ref(10);
 
-const itemsPerPageOptions = [25, 50, 100];
+const itemsPerPageOptions = [10, 25, 50, 100];
 
 interface Coin {
   id: string;
@@ -174,7 +175,9 @@ const calculatePercentage = (
 const updatePage = async () => {
   console.log(currentPage.value);
   loading.value = true;
-  if (itemsPerPage.value === 25) {
+  if (itemsPerPage.value === 10) {
+    pageNumber.value = 10;
+  } else if (itemsPerPage.value === 25) {
     pageNumber.value = 4;
   } else if (itemsPerPage.value === 50) {
     pageNumber.value = 2;
