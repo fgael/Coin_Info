@@ -8,6 +8,24 @@
     >
       <template v-slot="{ items }">
         <v-row>
+          <v-toolbar dense floating>
+            <v-toolbar-title class="text-start">
+              Top 100 crypto list
+            </v-toolbar-title>
+            <div class="d-flex">
+              <v-select
+                v-model="itemsPerPage"
+                class="mr-4"
+                variant="outlined"
+                label="Items per page"
+                density="compact"
+                :hide-details="true"
+                :items="itemsPerPageOptions"
+                @update:modelValue="updatePage"
+              />
+            </div>
+          </v-toolbar>
+
           <v-col
             v-for="(coin, index) in items"
             :key="index"
@@ -110,7 +128,7 @@
         </v-row>
         <v-pagination
           v-model="currentPage"
-          :length="4"
+          :length="pageNumber"
           class="my-2"
           @update:modelValue="updatePage"
         />
@@ -124,8 +142,11 @@ import { ref, onMounted } from "vue";
 import { fetchCoinList } from "@/services/api";
 
 const currentPage = ref(1);
-const itemsPerPage = ref(25);
+const itemsPerPage = ref(10);
 const loading = ref(false);
+const pageNumber = ref(10);
+
+const itemsPerPageOptions = [25, 50, 100];
 
 interface Coin {
   id: string;
@@ -153,6 +174,13 @@ const calculatePercentage = (
 const updatePage = async () => {
   console.log(currentPage.value);
   loading.value = true;
+  if (itemsPerPage.value === 25) {
+    pageNumber.value = 4;
+  } else if (itemsPerPage.value === 50) {
+    pageNumber.value = 2;
+  } else {
+    pageNumber.value = 1;
+  }
   coinList.value = await fetchCoinList(
     "usd",
     currentPage.value,
