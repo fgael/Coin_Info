@@ -19,7 +19,6 @@ const routes = [
         path: "/coin/:id",
         name: "CoinDetail",
         component: () => import("@/views/CoinDetail.vue"),
-        props: true,
       },
     ],
   },

@@ -11,6 +11,9 @@ import "vuetify/styles";
 // Composables
 import { createVuetify } from "vuetify";
 
+// Labs
+import { VSparkline } from "vuetify/labs/VSparkline";
+
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
   theme: {
@@ -48,5 +51,8 @@ export default createVuetify({
         },
       },
     },
+  },
+  components: {
+    VSparkline,
   },
 });

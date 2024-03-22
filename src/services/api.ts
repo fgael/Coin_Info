@@ -52,11 +52,14 @@ export const fetchCoinList = cacheWrapper(
   }
 );
 
-export const fetchCoin = cacheWrapper(async (id: string) => {
-  const response = await apiClient.get(`/coins/${id}`, {
-    params: {
-      x_cg_demo_api_key: process.env.VITE_APP_COINGECKO_API_KEY,
-    },
-  });
-  return response.data;
-});
+export const fetchCoin = cacheWrapper(
+  async (id: string, sparkline: boolean) => {
+    const response = await apiClient.get(`/coins/${id}`, {
+      params: {
+        sparkline: sparkline,
+        x_cg_demo_api_key: process.env.VITE_APP_COINGECKO_API_KEY,
+      },
+    });
+    return response.data;
+  }
+);

@@ -1,9 +1,19 @@
 <template>
   <v-container>
     <v-infinite-scroll mode="manual" @load="load">
-      <v-row>
-        <v-col v-for="coin in coinList" :key="coin.id" cols="12" lg="4" md="6">
-          <router-link :to="{ name: 'CoinDetail', params: { id: coin.id } }">
+      <v-row no-gutters>
+        <v-col
+          v-for="coin in coinList"
+          :key="coin.id"
+          cols="12"
+          lg="4"
+          md="6"
+          class="pa-2"
+        >
+          <router-link
+            :to="{ name: 'CoinDetail', params: { id: coin.id } }"
+            class="text-decoration-none"
+          >
             <v-card class="rounded-xl" elevation="0">
               <v-card-title class="d-flex align-center">
                 <v-avatar density="compact" class="mr-2">
@@ -147,8 +157,3 @@ onMounted(async () => {
   console.log(coinList.value);
 });
 </script>
-<style scoped>
-a {
-  text-decoration: none;
-}
-</style>
