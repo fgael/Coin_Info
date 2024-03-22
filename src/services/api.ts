@@ -36,14 +36,19 @@ export const fetchApiStatus = cacheWrapper(async () => {
 });
 
 export const fetchCoinList = cacheWrapper(
-  async (currency: string, page: number, perPage: number) => {
+  async (
+    currency: string,
+    page: number,
+    perPage: number,
+    sparkline: boolean
+  ) => {
     const response = await apiClient.get("/coins/markets", {
       params: {
         vs_currency: currency,
         order: "market_cap_desc",
         per_page: perPage,
         page: page,
-        sparkline: false,
+        sparkline: sparkline,
         locale: "en",
         x_cg_demo_api_key: process.env.VITE_APP_COINGECKO_API_KEY,
       },

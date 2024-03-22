@@ -61,6 +61,16 @@
                   }}
                 </p>
               </v-card-text>
+              <v-sparkline
+                :fill="fill"
+                :gradient="selectedGradient"
+                :line-width="lineWidth"
+                :model-value="coin.sparkline_in_7d.price"
+                :padding="padding"
+                :smooth="smooth"
+                height="40"
+                auto-draw
+              />
               <div class="d-flex align-center">
                 <v-card-text class="pt-0">
                   <v-progress-linear
@@ -119,6 +129,9 @@ interface Coin {
   market_cap_rank: number;
   high_24h: number;
   low_24h: number;
+  sparkline_in_7d: {
+    price: Array<number>;
+  };
 }
 
 const coinList = ref<Coin[]>([]);
@@ -132,6 +145,21 @@ const calculatePercentage = (
 ) => {
   return ((currentPrice - low24h) / (high24h - low24h)) * 100;
 };
+
+// Sparkline
+const gradients = [
+  ["#222"],
+  ["#42b3f4"],
+  ["red", "orange", "yellow"],
+  ["purple", "violet"],
+  ["#00c6ff", "#F0F", "#FF0"],
+  ["#f72047", "#ffd200", "#1feaea"],
+];
+const fill = ref(false);
+const selectedGradient = ref(gradients[5]);
+const padding = ref(8);
+const smooth = ref(true);
+const lineWidth = ref(2);
 
 const load = async ({ done }: { done: (status: "ok" | "error") => void }) => {
   try {
@@ -152,7 +180,8 @@ onMounted(async () => {
   coinList.value = await fetchCoinList(
     "usd",
     currentPage.value,
-    itemsPerPage.value
+    itemsPerPage.value,
+    true
   );
   console.log(coinList.value);
 });

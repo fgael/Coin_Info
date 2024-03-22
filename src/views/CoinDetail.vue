@@ -3,15 +3,6 @@
   <div>
     <div v-html="coin?.description?.en" />
   </div>
-  <v-sparkline
-    :fill="fill"
-    :gradient="selectedGradient"
-    :line-width="lineWidth"
-    :model-value="sparkline"
-    :padding="padding"
-    :smooth="smooth"
-    auto-draw
-  />
   <Line :data="chartData" :options="chartOptions" :style="chartStyle" />
 </template>
 
@@ -45,22 +36,6 @@ ChartJS.register(
 const coinId = ref("");
 const coin = ref<Coin | null>(null);
 const sparkline = ref();
-
-// Sparkline
-const gradients = [
-  ["#222"],
-  ["#42b3f4"],
-  ["red", "orange", "yellow"],
-  ["purple", "violet"],
-  ["#00c6ff", "#F0F", "#FF0"],
-  ["#f72047", "#ffd200", "#1feaea"],
-];
-const fill = ref(false);
-const selectedGradient = ref(gradients[5]);
-const padding = ref(8);
-const smooth = ref(true);
-
-const lineWidth = ref(2);
 
 interface Coin {
   id: string;
