@@ -1,9 +1,8 @@
-<!-- CoinDetail.vue -->
 <template>
+  <Line :data="chartData" :options="chartOptions" :style="chartStyle" />
   <div>
     <div v-html="coin?.description?.en" />
   </div>
-  <Line :data="chartData" :options="chartOptions" :style="chartStyle" />
 </template>
 
 <script setup lang="ts">
@@ -20,6 +19,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 import { Line } from "vue-chartjs";
 
@@ -30,12 +30,17 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 const coinId = ref("");
 const coin = ref<Coin | null>(null);
 const sparkline = ref();
+const lastSparklineValue = ref(0);
+const firstSparklineValue = ref(0);
+const chartLineColor = ref("rgba(60, 179, 113, 1)");
+const chartBackgroundColor = ref("rgba(60, 179, 113, 1)");
 
 interface Coin {
   id: string;
@@ -51,6 +56,56 @@ interface Coin {
   };
 }
 
+// Graph data
+const chartData = computed(() => {
+  const startHour = new Date(); // Heure de début
+  const hoursPassed = [];
+
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    hour12: true,
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  for (let i = 166; i >= 0; i--) {
+    const hour = new Date(startHour);
+    hour.setHours(hour.getHours() - i); // Soustraire i heures
+    const formattedHour = hour.toLocaleString("en-US", options); // Formater l'heure avec le jour de la semaine au format US
+    hoursPassed.push(formattedHour);
+  }
+
+  return {
+    labels: hoursPassed,
+    datasets: [
+      {
+        label: "Price",
+        data: sparkline.value,
+        borderColor: chartLineColor.value,
+        fill: true,
+        backgroundColor: chartBackgroundColor.value,
+      },
+    ],
+  };
+});
+
+const chartOptions = computed(() => ({
+  responsive: false,
+  maintainAspectRatio: false,
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+}));
+
+const chartStyle = computed(() => ({
+  height: "50%",
+  width: "100%",
+}));
+
 onMounted(async () => {
   // Get the coinId from the route params
   const routeParamsId = useRoute().params.id;
@@ -64,34 +119,15 @@ onMounted(async () => {
   coin.value = await fetchCoin(coinId.value, true);
   // Formatage des données pour correspondre au type SparklineItem
   sparkline.value = coin.value?.market_data?.sparkline_7d?.price;
-  console.log(sparkline.value);
+  lastSparklineValue.value = sparkline.value[sparkline.value.length - 1];
+  firstSparklineValue.value = sparkline.value[0];
+  chartLineColor.value =
+    lastSparklineValue.value > firstSparklineValue.value
+      ? "rgba(60, 179, 113, 0.8)"
+      : "rgb(255, 0, 0, 0.8)";
+  chartBackgroundColor.value =
+    lastSparklineValue.value > firstSparklineValue.value
+      ? "rgba(60, 179, 113, 0.2)"
+      : "rgba(255, 0, 0, 0.2)";
 });
-
-const chartData = computed(() => {
-  // const labels = sparkline.value.map((value: number, index: number) => {
-  //   const currentDate = new Date(); // Date actuelle
-  //   currentDate.setHours(currentDate.getHours() + index);
-  //   return `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-  // });
-
-  return {
-    labels: sparkline.value,
-    datasets: [
-      {
-        label: "Sparkline Data",
-        data: sparkline.value,
-      },
-    ],
-  };
-});
-
-const chartOptions = computed(() => ({
-  responsive: false,
-  maintainAspectRatio: false,
-}));
-
-const chartStyle = computed(() => ({
-  height: "50%",
-  width: "100%",
-}));
 </script>
