@@ -63,15 +63,17 @@ const chartData = computed(() => {
 
   const options: Intl.DateTimeFormatOptions = {
     weekday: "short",
-    hour12: true,
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
     hour: "2-digit",
-    minute: "2-digit",
+    hour12: true,
   };
 
   for (let i = 166; i >= 0; i--) {
     const hour = new Date(startHour);
-    hour.setHours(hour.getHours() - i); // Soustraire i heures
-    const formattedHour = hour.toLocaleString("en-US", options); // Formater l'heure avec le jour de la semaine au format US
+    hour.setHours(hour.getHours() - i);
+    const formattedHour = hour.toLocaleString("en-US", options);
     hoursPassed.push(formattedHour);
   }
 
