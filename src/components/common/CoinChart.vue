@@ -1,7 +1,7 @@
 <template>
   <v-card class="rounded-xl" elevation="0">
-    <v-card-title class="d-flex justify-center align-center">
-      <v-icon icon="mdi-chart-box" size="35" color="green" />
+    <v-card-title class="d-flex align-center">
+      <v-icon icon="mdi mdi-chart-pie" color="green" />
       <p class="ml-2">7 Day Chart</p>
     </v-card-title>
     <Line
@@ -99,9 +99,8 @@ const chartOptions = computed(() => ({
   },
   layout: {
     padding: {
-      left: 50,
+      left: 20,
       right: 20,
-
       bottom: 10,
     },
   },

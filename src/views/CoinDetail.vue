@@ -11,7 +11,7 @@
             <v-icon icon="mdi-swap-horizontal-circle" color="green" />
             <p class="ml-2">Converter</p>
           </v-card-title>
-          <div class="pt-1 px-4 pb-4">
+          <div class="pt-2 px-4 pb-5">
             <v-text-field
               v-model="dollarAmount"
               hide-details
