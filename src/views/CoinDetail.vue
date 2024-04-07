@@ -1,6 +1,11 @@
 <template>
   <v-container class="fill-height align-start pa-0 pt-3">
     <v-row no-gutters>
+      <v-col cols="12">
+        <v-btn variant="plain" prepend-icon="mdi-chevron-left" to="/">
+          Back
+        </v-btn>
+      </v-col>
       <v-col cols="12" lg="4" class="pa-2 pa-sm-3">
         <CoinCard :coin="coinFromList" />
         <div class="py-2 py-sm-3" />

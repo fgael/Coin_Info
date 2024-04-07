@@ -8,7 +8,7 @@
           cols="12"
           lg="4"
           md="6"
-          class="px-3 py-2"
+          class="px-4 py-4"
         >
           <router-link
             :to="{ name: 'CoinDetail', params: { id: coin.id } }"

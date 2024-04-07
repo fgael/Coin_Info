@@ -2,7 +2,7 @@
   <v-app-bar
     app
     class="bg-light-background"
-    elevation="1"
+    elevation="3"
     :style="{ position: 'fixed', top: '0', width: '100%', zIndex: '1000' }"
   >
     <!-- <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon> -->
