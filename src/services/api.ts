@@ -25,7 +25,6 @@ export const apiClient: AxiosInstance = axios.create({
   baseURL: "https://api.coingecko.com/api/v3",
 });
 
-// Wrap your existing fetch functions with the cacheWrapper
 export const fetchApiStatus = cacheWrapper(async () => {
   const response = await apiClient.get("/ping", {
     params: {

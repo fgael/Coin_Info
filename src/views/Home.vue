@@ -10,7 +10,12 @@
           md="6"
           class="pa-2"
         >
-          <CoinCard :coin="coin" />
+          <router-link
+            :to="{ name: 'CoinDetail', params: { id: coin.id } }"
+            class="text-decoration-none"
+          >
+            <CoinCard :coin="coin" />
+          </router-link>
         </v-col>
       </v-row>
     </v-infinite-scroll>
@@ -21,25 +26,11 @@
 import { ref, onMounted } from "vue";
 import { fetchCoinList } from "@/services/api";
 
+import { CoinFromList } from "@/types/Coin";
+
 import CoinCard from "@/components/common/CoinCard.vue";
 
-interface Coin {
-  id: string;
-  symbol: string;
-  name: string;
-  image: string;
-  current_price: number;
-  price_change_percentage_24h: number;
-  price_change_24h: number;
-  market_cap_rank: number;
-  high_24h: number;
-  low_24h: number;
-  sparkline_in_7d: {
-    price: Array<number>;
-  };
-}
-
-const coinList = ref<Coin[]>([]);
+const coinList = ref<CoinFromList[]>([]);
 const currentPage = ref(1);
 const itemsPerPage = ref(12);
 

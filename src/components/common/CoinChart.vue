@@ -1,12 +1,12 @@
 <template>
-  <div v-if="entryProps.sparkline">
+  <v-card class="rounded-xl" elevation="0">
     <Line
       v-if="!isLoading"
       :data="chartData"
       :options="chartOptions"
       :style="chartStyle"
     />
-  </div>
+  </v-card>
 </template>
 
 <script setup lang="ts">
@@ -98,9 +98,9 @@ const chartOptions = computed(() => ({
   },
   layout: {
     padding: {
-      left: 40,
+      left: 50,
       right: 20,
-      top: 10,
+      top: 30,
       bottom: 10,
     },
   },
