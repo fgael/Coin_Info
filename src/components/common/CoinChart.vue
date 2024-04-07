@@ -1,5 +1,9 @@
 <template>
   <v-card class="rounded-xl" elevation="0">
+    <v-card-title class="d-flex justify-center align-center">
+      <v-icon icon="mdi-chart-box" size="35" color="green" />
+      <p class="ml-2">7 Day Chart</p>
+    </v-card-title>
     <Line
       v-if="!isLoading"
       :data="chartData"
@@ -18,7 +22,6 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  Title,
   Tooltip,
   Legend,
   Filler,
@@ -30,7 +33,6 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
-  Title,
   Tooltip,
   Legend,
   Filler
@@ -41,12 +43,8 @@ const entryProps = defineProps<{
 }>();
 
 const isLoading = ref(true);
-// const lastSparklineValue = ref(0);
-// const firstSparklineValue = ref(0);
 const chartLineColor = ref("rgba(60, 179, 113, 1)");
 const chartBackgroundColor = ref("rgba(60, 179, 113, 1)");
-// const sparklineMin1Percent = ref(0);
-// const sparklineMax1Percent = ref(0);
 
 // Graph data
 const chartData = computed(() => {
@@ -55,7 +53,6 @@ const chartData = computed(() => {
     const hoursPassed = [];
 
     const options: Intl.DateTimeFormatOptions = {
-      weekday: "short",
       month: "2-digit",
       day: "2-digit",
       year: "2-digit",
@@ -74,7 +71,6 @@ const chartData = computed(() => {
       labels: hoursPassed,
       datasets: [
         {
-          label: "Price",
           data: entryProps.sparkline,
           borderColor: chartLineColor.value,
           backgroundColor: chartBackgroundColor.value,
@@ -91,6 +87,11 @@ const chartData = computed(() => {
 });
 
 const chartOptions = computed(() => ({
+  elements: {
+    line: {
+      tension: 0.1,
+    },
+  },
   plugins: {
     legend: {
       display: false,
@@ -100,18 +101,22 @@ const chartOptions = computed(() => ({
     padding: {
       left: 50,
       right: 20,
-      top: 30,
+
       bottom: 10,
     },
   },
   responsive: false,
   maintainAspectRatio: false,
   scales: {
-    // y: {
-    //   min: sparklineMin1Percent.value,
-    //   max: sparklineMax1Percent.value,
-    // },
+    y: {
+      suggestedMin: entryProps.sparkline
+        ? Math.min(...entryProps.sparkline) * 0.99
+        : 0,
+    },
     x: {
+      suggestedMax: entryProps.sparkline
+        ? Math.max(...entryProps.sparkline) * 1.01
+        : 0,
       grid: {
         display: false,
       },
@@ -149,11 +154,6 @@ onMounted(async () => {
     lastSparklineValue.value > firstSparklineValue.value
       ? "rgba(60, 179, 113, 0.2)"
       : "rgba(255, 0, 0, 0.2)";
-
   isLoading.value = false;
-  // const sparklineMaxValue = Math.max(...sparkline.value.flat());
-  // const sparklineMinValue = Math.min(...sparkline.value.flat());
-  // sparklineMin1Percent.value = sparklineMinValue * 0.99;
-  // sparklineMax1Percent.value = sparklineMaxValue * 1.01;
 });
 </script>

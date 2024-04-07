@@ -18,6 +18,14 @@
           </router-link>
         </v-col>
       </v-row>
+      <!-- <template v-slot:load-more="{ props }">
+        <v-btn
+          icon="mdi-chevron-down-circle"
+          size="medium"
+          v-bind="props"
+          @click="props.load"
+        ></v-btn>
+      </template> -->
     </v-infinite-scroll>
   </v-container>
 </template>

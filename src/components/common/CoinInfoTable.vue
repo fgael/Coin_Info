@@ -1,5 +1,9 @@
 <template>
   <v-card class="rounded-xl overflow-auto" elevation="0">
+    <v-card-title class="d-flex align-center">
+      <v-icon icon="mdi-information" color="green"> </v-icon>
+      <p class="ml-2">Stats</p>
+    </v-card-title>
     <v-table hover>
       <tbody>
         <tr v-for="(item, index) in data" :key="index">

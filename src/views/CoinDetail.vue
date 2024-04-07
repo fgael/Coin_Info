@@ -7,7 +7,10 @@
         <CoinInfoTable :coin="coinFromID" />
         <div class="py-2 py-sm-3" />
         <v-card class="rounded-xl" elevation="0">
-          <v-card-title>Converter</v-card-title>
+          <v-card-title class="d-flex align-center">
+            <v-icon icon="mdi-swap-horizontal-circle" color="green" />
+            <p class="ml-2">Converter</p>
+          </v-card-title>
           <div class="pt-1 px-4 pb-4">
             <v-text-field
               v-model="dollarAmount"
@@ -20,6 +23,7 @@
               @update:modelValue="convertToCrypto"
             />
             <div class="py-2" />
+            <!-- Ajout du bouton "Swap" -->
             <v-text-field
               v-model="cryptoAmount"
               hide-details
@@ -37,14 +41,15 @@
         <CoinChart :sparkline="sparkline" />
         <div class="py-2 py-sm-3" />
         <v-card class="rounded-xl" elevation="0">
-          <v-card-title>
-            About {{ coinFromID?.symbol.toUpperCase() }}
+          <v-card-title class="d-flex align-center">
+            <v-icon icon="mdi-information" color="green"> </v-icon>
+            <p class="ml-2">About {{ coinFromID?.symbol.toUpperCase() }}</p>
           </v-card-title>
-          <div class="d-flex justify-center wrap">
-            <v-divider length="97.5%" />
-          </div>
           <v-card-text>
-            <div v-html="coinFromID?.description?.en" />
+            <div
+              style="white-space: pre-line"
+              v-html="coinFromID?.description?.en"
+            />
           </v-card-text>
         </v-card>
       </v-col>
