@@ -1,112 +1,41 @@
 <template>
-  <Line :data="chartData" :options="chartOptions" :style="chartStyle" />
-  <div>
-    <div v-html="coin?.description?.en" />
-  </div>
+  <v-container>
+    <v-row>
+      <v-col cols="4"> <CoinCard :coin="coinCard" /> </v-col>
+      <v-col cols="8">
+        <v-card class="rounded-xl" elevation="0" v-if="sparkline">
+          <v-card-title class="text-center">
+            7 day price chart for {{ coin?.name }}
+          </v-card-title>
+          <CoinChart :sparkline="sparkline" />
+        </v-card>
+      </v-col>
+    </v-row>
+    <div>
+      <div v-html="coin?.description?.en" />
+    </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+// Vue
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+
+// API
 import { fetchCoin } from "@/services/api";
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from "chart.js";
-import { Line } from "vue-chartjs";
+// Types
+import { CoinFromList, Coin } from "@/types/Coin";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
+// Components
+import CoinCard from "@/components/common/CoinCard.vue";
+import CoinChart from "@/components/common/CoinChart.vue";
 
 const coinId = ref("");
 const coin = ref<Coin | null>(null);
-const sparkline = ref();
-const lastSparklineValue = ref(0);
-const firstSparklineValue = ref(0);
-const chartLineColor = ref("rgba(60, 179, 113, 1)");
-const chartBackgroundColor = ref("rgba(60, 179, 113, 1)");
-
-interface Coin {
-  id: string;
-  name: string;
-  symbol: string;
-  description: {
-    en: string;
-  };
-  market_data: {
-    sparkline_7d: {
-      price: Array<number[]>;
-    };
-  };
-}
-
-// Graph data
-const chartData = computed(() => {
-  const startHour = new Date(); // Heure de début
-  const hoursPassed = [];
-
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short",
-    month: "2-digit",
-    day: "2-digit",
-    year: "2-digit",
-    hour: "2-digit",
-    hour12: true,
-  };
-
-  for (let i = 166; i >= 0; i--) {
-    const hour = new Date(startHour);
-    hour.setHours(hour.getHours() - i);
-    const formattedHour = hour.toLocaleString("en-US", options);
-    hoursPassed.push(formattedHour);
-  }
-
-  return {
-    labels: hoursPassed,
-    datasets: [
-      {
-        label: "Price",
-        data: sparkline.value,
-        borderColor: chartLineColor.value,
-        fill: true,
-        backgroundColor: chartBackgroundColor.value,
-      },
-    ],
-  };
-});
-
-const chartOptions = computed(() => ({
-  responsive: false,
-  maintainAspectRatio: false,
-  scales: {
-    x: {
-      grid: {
-        display: false,
-      },
-    },
-  },
-}));
-
-const chartStyle = computed(() => ({
-  height: "50%",
-  width: "100%",
-}));
+const coinCard = ref<CoinFromList | null>(null);
+const sparkline = ref<number[] | null>(null);
 
 onMounted(async () => {
   // Get the coinId from the route params
@@ -119,17 +48,24 @@ onMounted(async () => {
 
   // Fetch the coin details
   coin.value = await fetchCoin(coinId.value, true);
-  // Formatage des données pour correspondre au type SparklineItem
-  sparkline.value = coin.value?.market_data?.sparkline_7d?.price;
-  lastSparklineValue.value = sparkline.value[sparkline.value.length - 1];
-  firstSparklineValue.value = sparkline.value[0];
-  chartLineColor.value =
-    lastSparklineValue.value > firstSparklineValue.value
-      ? "rgba(60, 179, 113, 0.8)"
-      : "rgb(255, 0, 0, 0.8)";
-  chartBackgroundColor.value =
-    lastSparklineValue.value > firstSparklineValue.value
-      ? "rgba(60, 179, 113, 0.2)"
-      : "rgba(255, 0, 0, 0.2)";
+  if (coin.value) {
+    coinCard.value = {
+      id: coin.value.id,
+      name: coin.value.name,
+      image: coin.value.image.thumb,
+      current_price: coin.value.market_data.current_price.usd,
+      price_change_percentage_24h:
+        coin.value.market_data.price_change_percentage_24h,
+      market_cap_rank: coin.value.market_data.market_cap_rank,
+      high_24h: coin.value.market_data.high_24h.usd,
+      low_24h: coin.value.market_data.low_24h.usd,
+      sparkline_in_7d: {
+        price: coin.value.market_data.sparkline_7d.price,
+      },
+    };
+  }
+  if (coin.value?.market_data?.sparkline_7d?.price) {
+    sparkline.value = coin.value?.market_data?.sparkline_7d?.price;
+  }
 });
 </script>
