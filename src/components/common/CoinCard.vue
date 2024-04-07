@@ -92,7 +92,6 @@
       </div>
     </v-card>
   </div>
-  <div v-else>toto</div>
 </template>
 
 <script setup lang="ts">
@@ -106,7 +105,7 @@ const entryProps = defineProps<{
 
 // Sparkline
 const fill = ref(false);
-const selectedGradient = ref(["#1feaea", "#ffd200", "#f72047"]);
+const selectedGradient = ref(["#46FF00", "#FFE400", "#FF2700"]);
 const padding = ref(8);
 const smooth = ref(true);
 const lineWidth = ref(2);

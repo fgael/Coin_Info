@@ -143,8 +143,8 @@ const firstSparklineValue = computed(() => {
 onMounted(async () => {
   chartLineColor.value =
     lastSparklineValue.value > firstSparklineValue.value
-      ? "rgba(60, 179, 113, 0.8)"
-      : "rgb(255, 0, 0, 0.8)";
+      ? "#46FF00"
+      : "#FF2700";
   chartBackgroundColor.value =
     lastSparklineValue.value > firstSparklineValue.value
       ? "rgba(60, 179, 113, 0.2)"

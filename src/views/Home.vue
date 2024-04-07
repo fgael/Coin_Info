@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pa-0">
     <v-infinite-scroll mode="manual" @load="load">
       <v-row no-gutters>
         <v-col
@@ -8,7 +8,7 @@
           cols="12"
           lg="4"
           md="6"
-          class="pa-2"
+          class="px-3 py-2"
         >
           <router-link
             :to="{ name: 'CoinDetail', params: { id: coin.id } }"
