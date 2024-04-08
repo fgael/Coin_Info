@@ -28,7 +28,6 @@
               @update:modelValue="convertToCrypto"
             />
             <div class="py-2" />
-            <!-- Ajout du bouton "Swap" -->
             <v-text-field
               v-model="cryptoAmount"
               hide-details

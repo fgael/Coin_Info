@@ -27,7 +27,6 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "vue-chartjs";
-import { cp } from "fs";
 
 ChartJS.register(
   CategoryScale,
@@ -74,6 +73,7 @@ const chartData = computed(() => {
           borderColor: chartLineColor.value,
           backgroundColor: chartBackgroundColor.value,
           fill: true,
+          borderWidth: 2,
         },
       ],
     };
@@ -145,7 +145,7 @@ const firstSparklineValue = computed(() => {
 
 const chartLineColor = computed(() => {
   return lastSparklineValue.value > firstSparklineValue.value
-    ? "#46FF00"
+    ? "green"
     : "#FF2700";
 });
 
