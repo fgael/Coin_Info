@@ -1,7 +1,8 @@
 import mitt, { Emitter } from "mitt";
 
 type Events = {
-  foo: string;
+  networkError: undefined;
+  networkOnline: undefined;
 };
 
 export const emitter: Emitter<Events> = mitt<Events>();

@@ -11,35 +11,7 @@
         <div class="py-2 py-sm-3" />
         <CoinInfoTable :coin="coinFromID" />
         <div class="py-2 py-sm-3" />
-        <v-card class="rounded-xl" elevation="0">
-          <v-card-title class="d-flex align-center">
-            <v-icon icon="mdi-swap-horizontal-circle" color="green" />
-            <p class="ml-2">Converter</p>
-          </v-card-title>
-          <div class="pt-2 px-4 pb-5">
-            <v-text-field
-              v-model="dollarAmount"
-              hide-details
-              label="USD"
-              variant="outlined"
-              clearable
-              type="number"
-              @click:clear="(cryptoAmount = null), (dollarAmount = null)"
-              @update:modelValue="convertToCrypto"
-            />
-            <div class="py-2" />
-            <v-text-field
-              v-model="cryptoAmount"
-              hide-details
-              :label="coinFromID?.symbol.toUpperCase()"
-              variant="outlined"
-              clearable
-              type="number"
-              @click:clear="(cryptoAmount = null), (dollarAmount = null)"
-              @update:modelValue="convertToDollar"
-            />
-          </div>
-        </v-card>
+        <Converter :coin="coinFromID" />
       </v-col>
       <v-col cols="12" lg="8" class="pa-2 pa-sm-3">
         <CoinChart :sparkline="sparkline" />
@@ -69,28 +41,12 @@ import { CoinFromList, CoinFromID } from "@/types/Coin";
 import CoinCard from "@/components/common/CoinCard.vue";
 import CoinChart from "@/components/common/CoinChart.vue";
 import CoinInfoTable from "@/components/common/CoinInfoTable.vue";
+import Converter from "@/components/common/Converter.vue";
 
 const coinId = ref("");
 const coinFromID = ref<CoinFromID | null>(null);
 const coinFromList = ref<CoinFromList | null>(null);
 const sparkline = ref<number[] | null>(null);
-
-const dollarAmount = ref<number | null>(null);
-const cryptoAmount = ref<number | null>(1);
-
-const convertToCrypto = () => {
-  const exchangeRate = coinFromID.value?.market_data?.current_price.usd;
-  if (exchangeRate && dollarAmount.value) {
-    cryptoAmount.value = dollarAmount.value / exchangeRate;
-  }
-};
-
-const convertToDollar = () => {
-  const exchangeRate = coinFromID.value?.market_data?.current_price.usd;
-  if (exchangeRate && cryptoAmount.value) {
-    dollarAmount.value = cryptoAmount.value * exchangeRate;
-  }
-};
 
 onMounted(async () => {
   const routeParamsId = useRoute().params.id;
@@ -98,7 +54,6 @@ onMounted(async () => {
     ? routeParamsId[0]
     : routeParamsId;
   coinFromID.value = await fetchCoin(coinId.value, true);
-  convertToDollar();
   if (coinFromID.value) {
     coinFromList.value = {
       id: coinFromID.value.id,

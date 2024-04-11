@@ -7,7 +7,7 @@
   >
     <!-- <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon> -->
     <!-- <v-img
-      src="/path/to/your/logo.png"
+      src="/"
       alt="Logo"
       max-height="40"
       contain
@@ -35,32 +35,30 @@
 </template>
 
 <script setup lang="ts">
-import { fetchApiStatus } from "@/services/api";
-import { ref, watchEffect, onMounted } from "vue";
+import { ref } from "vue";
 import { useTheme } from "vuetify";
+import { emitter } from "@/mitt";
 
 const theme = useTheme();
 const darkTheme = ref(false);
-const apiOnline = ref(false);
+const apiOnline = ref(true);
+const apiStatusText = ref("API Online");
+const apiIcon = ref("mdi-check-network-outline");
 
 const toggleTheme = () => {
   darkTheme.value = !darkTheme.value;
   theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
 };
 
-// Computed properties to display text and color of the API status
-const apiStatusText = ref("API Offline");
-const apiIcon = ref("mdi-close-network");
-
-onMounted(async () => {
-  apiOnline.value = await fetchApiStatus();
+emitter.on("networkError", () => {
+  apiOnline.value = false;
+  apiStatusText.value = "Rate Limit";
+  apiIcon.value = "mdi-close-network";
 });
 
-// Observe the API status and update the V-Chip accordingly
-watchEffect(() => {
-  if (apiOnline.value) {
-    apiStatusText.value = "API Online";
-    apiIcon.value = "mdi-check-network-outline";
-  }
+emitter.on("networkOnline", () => {
+  apiOnline.value = true;
+  apiStatusText.value = "API Online";
+  apiIcon.value = "mdi-check-network-outline";
 });
 </script>

@@ -1,20 +1,25 @@
 <template>
-  <v-card class="rounded-xl overflow-auto" elevation="0">
-    <v-card-title class="d-flex align-center">
-      <v-icon icon="mdi-chart-box" color="green"> </v-icon>
-      <p class="ml-2">Stats</p>
-    </v-card-title>
-    <v-table>
-      <tbody>
-        <tr v-for="(item, index) in data" :key="index">
-          <td class="font-weight-medium">{{ item.label }}</td>
-          <td class="text-end">
-            {{ item.value }}
-          </td>
-        </tr>
-      </tbody>
-    </v-table>
-  </v-card>
+  <div v-if="entryProps.coin">
+    <v-card class="rounded-xl overflow-auto" elevation="0">
+      <v-card-title class="d-flex align-center">
+        <v-icon icon="mdi-chart-box" color="green"> </v-icon>
+        <p class="ml-2">Stats</p>
+      </v-card-title>
+      <v-table>
+        <tbody>
+          <tr v-for="(item, index) in data" :key="index">
+            <td class="font-weight-medium">{{ item.label }}</td>
+            <td class="text-end">
+              {{ item.value }}
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
+    </v-card>
+  </div>
+  <div v-else>
+    <v-skeleton-loader type="list-item-three-line@5" />
+  </div>
 </template>
 
 <script setup lang="ts">

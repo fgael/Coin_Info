@@ -55,7 +55,7 @@
         :fill="fill"
         :gradient="selectedGradient"
         :line-width="lineWidth"
-        :model-value="entryProps.coin.sparkline_in_7d.price"
+        :model-value="entryProps.coin?.sparkline_in_7d?.price"
         :padding="padding"
         :smooth="smooth"
         height="40"
@@ -91,6 +91,9 @@
         </v-card-text>
       </div>
     </v-card>
+  </div>
+  <div v-else>
+    <v-skeleton-loader type="card" />
   </div>
 </template>
 

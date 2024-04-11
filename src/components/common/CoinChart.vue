@@ -1,20 +1,20 @@
 <template>
-  <v-card class="rounded-xl" elevation="0">
-    <v-card-title class="d-flex align-center">
-      <v-icon icon="mdi mdi-chart-pie" color="green" />
-      <p class="ml-2">7 Day Chart</p>
-    </v-card-title>
-    <Line
-      v-if="!isLoading"
-      :data="chartData"
-      :options="chartOptions"
-      :style="chartStyle"
-    />
-  </v-card>
+  <div v-if="entryProps.sparkline">
+    <v-card class="rounded-xl" elevation="0">
+      <v-card-title class="d-flex align-center">
+        <v-icon icon="mdi mdi-chart-pie" color="green" />
+        <p class="ml-2">7 Day Chart</p>
+      </v-card-title>
+      <Line :data="chartData" :options="chartOptions" :style="chartStyle" />
+    </v-card>
+  </div>
+  <div v-else>
+    <v-skeleton-loader type="list-item-three-line@6" class="py-4" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { computed } from "vue";
 
 import {
   Chart as ChartJS,
@@ -41,8 +41,6 @@ ChartJS.register(
 const entryProps = defineProps<{
   sparkline: number[] | null;
 }>();
-
-const isLoading = ref(true);
 
 // Graph data
 const chartData = computed(() => {
@@ -74,6 +72,7 @@ const chartData = computed(() => {
           backgroundColor: chartBackgroundColor.value,
           fill: true,
           borderWidth: 2,
+          pointRadius: 1,
         },
       ],
     };
@@ -145,16 +144,13 @@ const firstSparklineValue = computed(() => {
 
 const chartLineColor = computed(() => {
   return lastSparklineValue.value > firstSparklineValue.value
-    ? "green"
-    : "#FF2700";
+    ? "rgba(35, 128, 0, 0.8)"
+    : "rgba(255, 58, 58, 0.8)";
 });
 
 const chartBackgroundColor = computed(() => {
   return lastSparklineValue.value > firstSparklineValue.value
     ? "rgba(60, 179, 113, 0.2)"
     : "rgba(255, 0, 0, 0.2)";
-});
-onMounted(async () => {
-  isLoading.value = false;
 });
 </script>
