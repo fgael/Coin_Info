@@ -2,7 +2,7 @@
   <div v-if="entryProps.coin">
     <v-card class="rounded-xl overflow-auto" elevation="0">
       <v-card-title class="d-flex align-center">
-        <v-icon icon="mdi-chart-box" color="green"> </v-icon>
+        <v-icon icon="mdi-chart-box" color="green" class="my-2" />
         <p class="ml-2">Stats</p>
       </v-card-title>
       <v-table>

@@ -11,23 +11,12 @@
         <div class="py-2 py-sm-3" />
         <CoinInfoTable :coin="coinFromID" />
         <div class="py-2 py-sm-3" />
-        <Converter :coin="coinFromID" />
+        <ConverterCard :coin="coinFromID" />
       </v-col>
       <v-col cols="12" lg="8" class="pa-2 pa-sm-3">
         <CoinChart :sparkline="sparkline" />
         <div class="py-2 py-sm-3" />
-        <v-card class="rounded-xl" elevation="0">
-          <v-card-title class="d-flex align-center">
-            <v-icon icon="mdi-information" color="green"> </v-icon>
-            <p class="ml-2">About {{ coinFromID?.symbol.toUpperCase() }}</p>
-          </v-card-title>
-          <v-card-text>
-            <div
-              style="white-space: pre-line"
-              v-html="coinFromID?.description?.en"
-            />
-          </v-card-text>
-        </v-card>
+        <CoinDescriptionCard :coin="coinFromID" />
       </v-col>
     </v-row>
   </v-container>
@@ -41,7 +30,8 @@ import { CoinFromList, CoinFromID } from "@/types/Coin";
 import CoinCard from "@/components/common/CoinCard.vue";
 import CoinChart from "@/components/common/CoinChart.vue";
 import CoinInfoTable from "@/components/common/CoinInfoTable.vue";
-import Converter from "@/components/common/Converter.vue";
+import ConverterCard from "@/components/common/ConverterCard.vue";
+import CoinDescriptionCard from "@/components/common/CoinDescriptionCard.vue";
 
 const coinId = ref("");
 const coinFromID = ref<CoinFromID | null>(null);

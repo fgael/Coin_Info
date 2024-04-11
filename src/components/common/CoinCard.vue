@@ -2,7 +2,7 @@
   <div v-if="entryProps.coin">
     <v-card class="rounded-xl" elevation="0">
       <v-card-title class="d-flex align-center">
-        <v-avatar density="compact" class="mr-2">
+        <v-avatar density="compact" class="mr-2 my-1">
           <v-img :src="entryProps.coin.image" />
         </v-avatar>
         {{ entryProps.coin.name }}

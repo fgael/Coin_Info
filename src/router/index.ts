@@ -2,8 +2,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import DefaultView from "@/layouts/default/Default.vue";
-import Home from "@/views/Home.vue";
-import CoinDetail from "@/views/CoinDetail.vue";
+import HomeView from "@/views/HomeView.vue";
+import CoinDetailView from "@/views/CoinDetailView.vue";
 
 const routes = [
   {
@@ -13,12 +13,12 @@ const routes = [
       {
         path: "",
         name: "Home",
-        component: Home,
+        component: HomeView,
       },
       {
         path: "/coin/:id",
         name: "CoinDetail",
-        component: CoinDetail,
+        component: CoinDetailView,
       },
     ],
   },

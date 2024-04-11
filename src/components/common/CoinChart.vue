@@ -2,7 +2,7 @@
   <div v-if="entryProps.sparkline">
     <v-card class="rounded-xl" elevation="0">
       <v-card-title class="d-flex align-center">
-        <v-icon icon="mdi mdi-chart-pie" color="green" />
+        <v-icon icon="mdi mdi-chart-pie" color="green" class="my-2" />
         <p class="ml-2">7 Day Chart</p>
       </v-card-title>
       <Line :data="chartData" :options="chartOptions" :style="chartStyle" />
