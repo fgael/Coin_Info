@@ -23,10 +23,17 @@
 </template>
 
 <script setup lang="ts">
+// Vue
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+
+// API
 import { fetchCoin } from "@/services/api";
+
+// Types
 import { CoinFromList, CoinFromID } from "@/types/Coin";
+
+// Component
 import CoinCard from "@/components/common/CoinCard.vue";
 import CoinChart from "@/components/common/CoinChart.vue";
 import CoinInfoTable from "@/components/common/CoinInfoTable.vue";

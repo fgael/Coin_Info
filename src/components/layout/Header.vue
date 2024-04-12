@@ -16,13 +16,27 @@
     <v-app-bar-title>
       <v-toolbar-title>
         <router-link
-          :to="{ name: 'Home' }"
+          :to="{ name: 'HomeView' }"
           class="text-decoration-none text-color-high-contrast"
-          >Coin<b class="text-green">Info</b></router-link
         >
+          Coin<b class="text-green">Info</b>
+        </router-link>
       </v-toolbar-title>
     </v-app-bar-title>
     <v-spacer></v-spacer>
+    <!-- <v-text-field
+      v-model="search"
+      class="mx-3"
+      label="Search Coin"
+      variant="outlined"
+      density="compact"
+      prepend-inner-icon="mdi-magnify"
+      clearable
+      hide-details
+      single-line
+      style="max-width: 250px"
+      @keyup.enter="searchCoin"
+    /> -->
     <v-chip :prepend-icon="apiIcon" :color="apiOnline ? 'green' : 'red'">
       {{ apiStatusText }}
     </v-chip>
@@ -36,6 +50,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+// import router from "@/router";
 import { useTheme } from "vuetify";
 import { emitter } from "@/mitt";
 
@@ -44,6 +59,15 @@ const darkTheme = ref(false);
 const apiOnline = ref(true);
 const apiStatusText = ref("API Online");
 const apiIcon = ref("mdi-check-network-outline");
+// const search = ref("");
+
+// const searchCoin = () => {
+//   if (search.value) {
+//     const searchQuery = search.value.toLowerCase();
+//     search.value = "";
+//     router.push({ name: "CoinView", params: { id: searchQuery } });
+//   }
+// };
 
 const toggleTheme = () => {
   darkTheme.value = !darkTheme.value;

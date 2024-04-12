@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import DefaultView from "@/layouts/default/Default.vue";
 import HomeView from "@/views/HomeView.vue";
-import CoinDetailView from "@/views/CoinDetailView.vue";
+import CoinView from "@/views/CoinView.vue";
 
 const routes = [
   {
@@ -12,13 +12,13 @@ const routes = [
     children: [
       {
         path: "",
-        name: "Home",
+        name: "HomeView",
         component: HomeView,
       },
       {
         path: "/coin/:id",
-        name: "CoinDetail",
-        component: CoinDetailView,
+        name: "CoinView",
+        component: CoinView,
       },
     ],
   },

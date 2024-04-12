@@ -1,6 +1,6 @@
 <template>
   <div v-if="entryProps.coin">
-    <v-card class="rounded-xl" elevation="0">
+    <v-card class="rounded-lg" elevation="0">
       <v-card-title class="d-flex align-center">
         <v-icon icon="mdi-swap-horizontal-circle" color="green" class="my-2" />
         <p class="ml-2">Converter</p>

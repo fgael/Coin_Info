@@ -12,7 +12,7 @@
             class="px-4 py-4"
           >
             <router-link
-              :to="{ name: 'CoinDetail', params: { id: coin.id } }"
+              :to="{ name: 'CoinView', params: { id: coin.id } }"
               class="text-decoration-none"
             >
               <CoinCard :coin="coin" />
@@ -57,17 +57,24 @@
 </template>
 
 <script lang="ts" setup>
+// Vue
 import { ref, onMounted } from "vue";
+
+// API
 import { fetchCoinList } from "@/services/api";
 
+// Types
 import { CoinFromList } from "@/types/Coin";
 
+// Component
 import CoinCard from "@/components/common/CoinCard.vue";
 
+// Variables
 const coinList = ref<CoinFromList[]>([]);
 const currentPage = ref(1);
 const itemsPerPage = ref(12);
 
+// Functions
 const load = async ({
   done,
 }: {

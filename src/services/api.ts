@@ -33,11 +33,7 @@ export const apiClient: AxiosInstance = axios.create({
 });
 
 export const fetchApiStatus = cacheWrapper(async () => {
-  const response = await apiClient.get("/ping", {
-    // params: {
-    //   x_cg_demo_api_key: process.env.VITE_APP_COINGECKO_API_KEY,
-    // },
-  });
+  const response = await apiClient.get("/ping", {});
   return response.status === 200;
 });
 
@@ -56,7 +52,6 @@ export const fetchCoinList = cacheWrapper(
         page: page,
         sparkline: sparkline,
         locale: "en",
-        // x_cg_demo_api_key: process.env.VITE_APP_COINGECKO_API_KEY,
       },
     });
     return response.data;
@@ -68,7 +63,6 @@ export const fetchCoin = cacheWrapper(
     const response = await apiClient.get(`/coins/${id}`, {
       params: {
         sparkline: sparkline,
-        // x_cg_demo_api_key: process.env.VITE_APP_COINGECKO_API_KEY,
       },
     });
     return response.data;

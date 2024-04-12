@@ -1,6 +1,6 @@
 <template>
   <div v-if="entryProps.sparkline">
-    <v-card class="rounded-xl" elevation="0">
+    <v-card class="rounded-lg" elevation="0">
       <v-card-title class="d-flex align-center">
         <v-icon icon="mdi mdi-chart-pie" color="green" class="my-2" />
         <p class="ml-2">7 Day Chart</p>
@@ -71,8 +71,8 @@ const chartData = computed(() => {
           borderColor: chartLineColor.value,
           backgroundColor: chartBackgroundColor.value,
           fill: true,
-          borderWidth: 2,
-          pointRadius: 1,
+          borderWidth: 3,
+          pointRadius: 2,
         },
       ],
     };
