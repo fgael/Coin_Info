@@ -3,16 +3,8 @@
     app
     class="bg-light-background"
     elevation="3"
-    :style="{ position: 'fixed', top: '0', width: '100%', zIndex: '1000' }"
+    :style="{ position: 'fixed', top: '0', width: '100%', zIndex: '1' }"
   >
-    <!-- <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon> -->
-    <!-- <v-img
-      src="/"
-      alt="Logo"
-      max-height="40"
-      contain
-    ></v-img> -->
-
     <v-app-bar-title>
       <v-toolbar-title>
         <router-link
@@ -23,27 +15,41 @@
         </router-link>
       </v-toolbar-title>
     </v-app-bar-title>
-    <v-spacer></v-spacer>
-    <!-- <v-text-field
-      v-model="search"
-      class="mx-3"
-      label="Search Coin"
+    <v-spacer />
+    <v-select
+      v-model="selectedCurrency"
+      :items="currencies"
+      label="Currency"
+      class="mr-5"
       variant="outlined"
       density="compact"
-      prepend-inner-icon="mdi-magnify"
-      clearable
       hide-details
-      single-line
       style="max-width: 250px"
-      @keyup.enter="searchCoin"
-    /> -->
+      @update:modelValue="changeCurrency"
+    >
+      <template v-slot:selection="{ item }">
+        <div class="d-flex align-center">
+          <v-icon color="grey-darken-3" size="20" :icon="item.raw.icon" />
+          <p class="ml-1">
+            {{ item.title }}
+          </p>
+        </div>
+      </template>
+      <template v-slot:item="{ props, item }">
+        <v-list-item
+          v-bind="props"
+          :prepend-icon="item.raw.icon"
+          :title="item.title"
+        />
+      </template>
+    </v-select>
     <v-chip :prepend-icon="apiIcon" :color="apiOnline ? 'green' : 'red'">
       {{ apiStatusText }}
     </v-chip>
     <v-btn class="ml-2" density="compact" icon @click="toggleTheme">
-      <v-icon size="small">{{
-        darkTheme ? "mdi-weather-night" : "mdi-white-balance-sunny"
-      }}</v-icon>
+      <v-icon size="small">
+        {{ darkTheme ? "mdi-weather-night" : "mdi-white-balance-sunny" }}
+      </v-icon>
     </v-btn>
   </v-app-bar>
 </template>
@@ -53,25 +59,34 @@ import { ref } from "vue";
 // import router from "@/router";
 import { useTheme } from "vuetify";
 import { emitter } from "@/mitt";
+import { useCurrencyStore } from "@/stores/currency";
 
 const theme = useTheme();
+const currencyStore = useCurrencyStore();
+const selectedCurrency = ref(currencyStore.currency);
 const darkTheme = ref(false);
 const apiOnline = ref(true);
 const apiStatusText = ref("API Online");
 const apiIcon = ref("mdi-check-network-outline");
-// const search = ref("");
 
-// const searchCoin = () => {
-//   if (search.value) {
-//     const searchQuery = search.value.toLowerCase();
-//     search.value = "";
-//     router.push({ name: "CoinView", params: { id: searchQuery } });
-//   }
-// };
+const currencies = [
+  { title: "Dollar", value: "usd", icon: "mdi-currency-usd" },
+  { title: "Euro", value: "eur", icon: "mdi-currency-eur" },
+  { title: "Pound Sterling", value: "gbp", icon: "mdi-currency-gbp" },
+  { title: "Rubel", value: "rub", icon: "mdi-currency-rub" },
+  { title: "New Taiwan Dollar", value: "twd", icon: "mdi-currency-twd" },
+  { title: "Yuan", value: "cny", icon: "mdi-currency-cny" },
+  { title: "Japanese Yen", value: "jpy", icon: "mdi-currency-jpy" },
+  { title: "Rupee", value: "inr", icon: "mdi-currency-inr" },
+];
 
 const toggleTheme = () => {
   darkTheme.value = !darkTheme.value;
   theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
+};
+
+const changeCurrency = (value: string) => {
+  currencyStore.setCurrency(value);
 };
 
 emitter.on("networkError", () => {

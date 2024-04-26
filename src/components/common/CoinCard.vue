@@ -12,14 +12,7 @@
       </v-card-title>
       <v-card-text class="d-flex align-center">
         <div class="text-h5 font-weight-medium">
-          {{
-            entryProps.coin.current_price > 0.01
-              ? entryProps.coin.current_price.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                })
-              : "$" + entryProps.coin.current_price.toFixed(8)
-          }}
+          {{ convertPrice(entryProps.coin.current_price) }}
         </div>
         <v-icon
           class="ml-2"
@@ -70,23 +63,9 @@
             rounded
           />
           <div class="d-flex justify-space-between">
-            {{
-              entryProps.coin.low_24h > 0.01
-                ? entryProps.coin.low_24h.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                  })
-                : "$" + entryProps.coin.low_24h.toFixed(8)
-            }}
+            {{ convertPrice(entryProps.coin.low_24h) }}
             <p class="text-body-2 mr-2">24h Range</p>
-            {{
-              entryProps.coin.high_24h > 0.01
-                ? entryProps.coin.high_24h.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                  })
-                : "$" + entryProps.coin.high_24h.toFixed(8)
-            }}
+            {{ convertPrice(entryProps.coin.high_24h) }}
           </div>
         </v-card-text>
       </div>
@@ -102,9 +81,60 @@ import { ref, computed } from "vue";
 
 import { CoinFromList } from "@/types/Coin";
 
+import { useCurrencyStore } from "@/stores/currency";
+
+const currencyStore = useCurrencyStore();
+
 const entryProps = defineProps<{
   coin: CoinFromList | null;
 }>();
+
+const convertPrice = (price: number) => {
+  const currentCurrency = currencyStore.currency;
+  switch (currentCurrency) {
+    case "eur":
+      return price.toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      });
+    case "usd":
+    default:
+      return price.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
+    case "gbp":
+      return price.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      });
+    case "rub":
+      return price.toLocaleString("ru-RU", {
+        style: "currency",
+        currency: "RUB",
+      });
+    case "twd":
+      return price.toLocaleString("zh-TW", {
+        style: "currency",
+        currency: "TWD",
+      });
+    case "cny":
+      return price.toLocaleString("zh-CN", {
+        style: "currency",
+        currency: "CNY",
+      });
+    case "jpy":
+      return price.toLocaleString("ja-JP", {
+        style: "currency",
+        currency: "JPY",
+      });
+    case "inr":
+      return price.toLocaleString("en-IN", {
+        style: "currency",
+        currency: "INR",
+      });
+  }
+};
 
 // Sparkline
 const fill = ref(false);

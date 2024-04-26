@@ -58,7 +58,9 @@
 
 <script lang="ts" setup>
 // Vue
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
+
+import { useCurrencyStore } from "@/stores/currency";
 
 // API
 import { fetchCoinList } from "@/services/api";
@@ -73,6 +75,7 @@ import CoinCard from "@/components/common/CoinCard.vue";
 const coinList = ref<CoinFromList[]>([]);
 const currentPage = ref(1);
 const itemsPerPage = ref(12);
+const currencyStore = useCurrencyStore();
 
 // Functions
 const load = async ({
@@ -104,11 +107,27 @@ const load = async ({
 };
 
 onMounted(async () => {
-  coinList.value = await fetchCoinList(
-    "usd",
-    currentPage.value,
-    itemsPerPage.value,
-    true
+  await fetchData();
+
+  watch(
+    () => currencyStore.currency,
+    async () => {
+      currentPage.value = 1;
+      await fetchData();
+    }
   );
 });
+
+const fetchData = async () => {
+  try {
+    const newData = await fetchCoinList(
+      currencyStore.currency,
+      currentPage.value,
+      itemsPerPage.value
+    );
+    coinList.value = newData;
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
