@@ -89,6 +89,21 @@ const entryProps = defineProps<{
   coin: CoinFromList | null;
 }>();
 
+// Sparkline
+const fill = ref(false);
+const selectedGradient = ref(["#46FF00", "#FFE400", "#FF2700"]);
+const padding = ref(8);
+const smooth = ref(true);
+const lineWidth = ref(2);
+const percentageValue = computed(() => {
+  if (entryProps.coin) {
+    const { current_price, low_24h, high_24h } = entryProps.coin;
+    return ((current_price - low_24h) / (high_24h - low_24h)) * 100;
+  } else {
+    return 0;
+  }
+});
+
 const convertPrice = (price: number) => {
   const currentCurrency = currencyStore.currency;
   switch (currentCurrency) {
@@ -135,19 +150,4 @@ const convertPrice = (price: number) => {
       });
   }
 };
-
-// Sparkline
-const fill = ref(false);
-const selectedGradient = ref(["#46FF00", "#FFE400", "#FF2700"]);
-const padding = ref(8);
-const smooth = ref(true);
-const lineWidth = ref(2);
-const percentageValue = computed(() => {
-  if (entryProps.coin) {
-    const { current_price, low_24h, high_24h } = entryProps.coin;
-    return ((current_price - low_24h) / (high_24h - low_24h)) * 100;
-  } else {
-    return 0;
-  }
-});
 </script>

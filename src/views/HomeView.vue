@@ -88,7 +88,8 @@ const load = async ({
     const newData = await fetchCoinList(
       "usd",
       currentPage.value,
-      itemsPerPage.value
+      itemsPerPage.value,
+      true
     );
     coinList.value = [...coinList.value, ...newData];
     if (typeof done === "function") {
@@ -123,7 +124,8 @@ const fetchData = async () => {
     const newData = await fetchCoinList(
       currencyStore.currency,
       currentPage.value,
-      itemsPerPage.value
+      itemsPerPage.value,
+      true
     );
     coinList.value = newData;
   } catch (error) {
