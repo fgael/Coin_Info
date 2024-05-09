@@ -23,19 +23,17 @@ export interface CoinFromID {
     en: string;
   };
   market_data: {
-    ath: { usd: number };
-    current_price: {
-      usd: number;
-    };
-    fully_diluted_valuation: { usd: number };
+    ath: { [key: string]: number };
+    current_price: { [key: string]: number };
+    fully_diluted_valuation: { [key: string]: number };
     circulating_supply: number;
     total_supply: number;
-    max_supply: number;
+    max_supply: any;
     price_change_percentage_24h: number;
     price_change_24h: number;
     market_cap_rank: number;
-    market_cap: { usd: number };
-    total_volume: { usd: number };
+    market_cap: { [key: string]: number };
+    total_volume: { [key: string]: number };
     low_24h: {
       usd: number;
     };

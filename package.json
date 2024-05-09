@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "deploy": "npm run build && xmit coininfo.xmit.dev@48",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
@@ -27,6 +28,7 @@
     "@types/webfontloader": "^1.6.38",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-typescript": "^13.0.0",
+    "@xmit.co/xmit": "^0.2.11-0",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.24.0",
     "typescript": "^5.4.3",

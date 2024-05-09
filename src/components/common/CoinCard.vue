@@ -12,7 +12,7 @@
       </v-card-title>
       <v-card-text class="d-flex align-center">
         <div class="text-h5 font-weight-medium">
-          {{ convertPrice(entryProps.coin.current_price) }}
+          {{ convertCurrency(entryProps.coin.current_price) }}
         </div>
         <v-icon
           class="ml-2"
@@ -63,9 +63,9 @@
             rounded
           />
           <div class="d-flex justify-space-between">
-            {{ convertPrice(entryProps.coin.low_24h) }}
+            {{ convertCurrency(entryProps.coin.low_24h) }}
             <p class="text-body-2 mr-2">24h Range</p>
-            {{ convertPrice(entryProps.coin.high_24h) }}
+            {{ convertCurrency(entryProps.coin.high_24h) }}
           </div>
         </v-card-text>
       </div>
@@ -81,9 +81,7 @@ import { ref, computed } from "vue";
 
 import { CoinFromList } from "@/types/Coin";
 
-import { useCurrencyStore } from "@/stores/currency";
-
-const currencyStore = useCurrencyStore();
+import { convertCurrency } from "@/helpers/currencyConverter";
 
 const entryProps = defineProps<{
   coin: CoinFromList | null;
@@ -103,51 +101,4 @@ const percentageValue = computed(() => {
     return 0;
   }
 });
-
-const convertPrice = (price: number) => {
-  const currentCurrency = currencyStore.currency;
-  switch (currentCurrency) {
-    case "eur":
-      return price.toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      });
-    case "usd":
-    default:
-      return price.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      });
-    case "gbp":
-      return price.toLocaleString("en-GB", {
-        style: "currency",
-        currency: "GBP",
-      });
-    case "rub":
-      return price.toLocaleString("ru-RU", {
-        style: "currency",
-        currency: "RUB",
-      });
-    case "twd":
-      return price.toLocaleString("zh-TW", {
-        style: "currency",
-        currency: "TWD",
-      });
-    case "cny":
-      return price.toLocaleString("zh-CN", {
-        style: "currency",
-        currency: "CNY",
-      });
-    case "jpy":
-      return price.toLocaleString("ja-JP", {
-        style: "currency",
-        currency: "JPY",
-      });
-    case "inr":
-      return price.toLocaleString("en-IN", {
-        style: "currency",
-        currency: "INR",
-      });
-  }
-};
 </script>
