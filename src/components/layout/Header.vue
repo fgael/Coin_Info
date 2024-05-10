@@ -19,11 +19,16 @@
     </v-chip>
     <v-app-bar-nav-icon
       variant="text"
-      @click.stop="drawer = !drawer"
+      @click="drawer = !drawer"
       icon="mdi-cog"
     />
   </v-app-bar>
-  <v-navigation-drawer v-model="drawer" :width="xs ? width : '200'">
+  <v-navigation-drawer
+    v-model="drawer"
+    :width="xs ? width : '200'"
+    :scrim="false"
+    :location="xs ? 'left' : 'right'"
+  >
     <v-list density="compact">
       <v-select
         v-model="selectedCurrency"
