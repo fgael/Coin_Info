@@ -23,11 +23,7 @@
       icon="mdi-cog"
     />
   </v-app-bar>
-  <v-navigation-drawer
-    v-model="drawer"
-    location="right"
-    :width="xs ? width : '200'"
-  >
+  <v-navigation-drawer v-model="drawer" :width="xs ? width : '200'">
     <v-list density="compact">
       <v-select
         v-model="selectedCurrency"

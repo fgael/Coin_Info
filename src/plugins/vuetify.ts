@@ -12,7 +12,7 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 
 // Labs
-import { VSparkline } from "vuetify/labs/VSparkline";
+// import { VSparkline } from "vuetify/labs/VSparkline";
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
@@ -52,7 +52,7 @@ export default createVuetify({
       },
     },
   },
-  components: {
-    VSparkline,
-  },
+  // components: {
+  //   VSparkline,
+  // },
 });
