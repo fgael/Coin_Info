@@ -69,10 +69,9 @@ const data = computed(() => {
       },
       {
         label: "Max supply",
-        value:
-          typeof entryProps.coin.market_data.max_supply === "number"
-            ? entryProps.coin.market_data.max_supply
-            : entryProps.coin.market_data.max_supply || "N/A",
+        value: entryProps.coin.market_data.max_supply
+          ? entryProps.coin.market_data.max_supply
+          : "N/A",
       },
       {
         label: "Total Volume",

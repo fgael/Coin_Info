@@ -12,7 +12,7 @@ const setCache = (key: string, data: any) => {
 };
 
 // Function to retrieve cached data from localStorage, considering expiration time
-const getCache = (key: string, maxAge: number = 30000) => {
+const getCache = (key: string, maxAge: number = 60000) => {
   const cachedData = localStorage.getItem(CACHE_KEY_PREFIX + key);
 
   if (cachedData) {
@@ -32,7 +32,7 @@ export const fetchWithCache = async (
   key: string, // Unique identifier for the cache
   apiCall: (params?: any) => Promise<any>, // API call function
   params?: any, // Optional parameters for the API call
-  maxAge: number = 30000 // Maximum age for cache validity in milliseconds
+  maxAge: number = 60000 // Maximum age for cache validity in milliseconds
 ) => {
   // Attempt to retrieve cached data
   const cachedData = getCache(key, maxAge);
