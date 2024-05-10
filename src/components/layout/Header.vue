@@ -18,9 +18,10 @@
       {{ apiStatusText }}
     </v-chip>
     <v-app-bar-nav-icon
+      class="mx-2"
       variant="text"
-      @click="drawer = !drawer"
       icon="mdi-cog"
+      @click="drawer = !drawer"
     />
   </v-app-bar>
   <v-navigation-drawer
