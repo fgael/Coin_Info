@@ -66,7 +66,6 @@ const handleSearch = (newSearch: string) => {
 
 watch(selectedItem, (newSelectedItem) => {
   if (newSelectedItem) {
-    console.log("Selected item:", newSelectedItem.id);
     router.push({
       name: "CoinView",
       params: { id: newSelectedItem.id.toString() },

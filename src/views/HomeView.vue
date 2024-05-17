@@ -77,9 +77,14 @@ const currencyStore = useCurrencyStore();
 const load = async ({
   done,
 }: {
-  done: (status: "ok" | "error" | "empty") => void;
+  done: (status: "ok" | "error" | "loading") => void;
 }): Promise<void> => {
   try {
+    if (typeof done === "function") {
+      done("loading");
+    } else {
+      return;
+    }
     currentPage.value++;
     const newData = await fetchCoinList(
       "usd",

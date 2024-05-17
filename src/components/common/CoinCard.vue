@@ -19,48 +19,57 @@
                 {{ entryProps.coin.name }}
               </div>
               <v-chip label density="comfortable" size="small" class="ml-2">
-                #{{ entryProps.coin.market_cap_rank }}
+                #{{
+                  entryProps.coin.market_cap_rank
+                    ? entryProps.coin.market_cap_rank
+                    : "N/A"
+                }}
               </v-chip>
             </div>
-            <v-chip prepend-icon="mdi-clock-outline" label>
-              <p class="text-caption">24h Value</p>
-            </v-chip>
           </v-card-title>
           <v-card-text class="d-flex align-center">
             <div class="text-h5 font-weight-medium">
               {{ convertCurrency(entryProps.coin.current_price) }}
             </div>
-            <v-icon
-              class="ml-2"
-              :icon="
-                entryProps.coin.price_change_percentage_24h > 0
-                  ? 'mdi-trending-up'
-                  : 'mdi-trending-down'
-              "
-              :color="
-                entryProps.coin.price_change_percentage_24h > 0
-                  ? 'success'
-                  : 'error'
-              "
-            />
-            <p
-              class="ml-2 text-body-1"
-              :class="
-                entryProps.coin.price_change_percentage_24h > 0
-                  ? 'text-success'
-                  : 'text-error'
-              "
+            <v-chip
+              append-icon="mdi-clock-outline"
+              label
+              density="compact"
+              class="ml-2 pl-1"
             >
-              {{
-                entryProps.coin.price_change_percentage_24h > 0
-                  ? "+" +
-                    entryProps.coin.price_change_percentage_24h.toFixed(2) +
-                    "%"
-                  : entryProps.coin.price_change_percentage_24h.toFixed(2) + "%"
-              }}
-            </p>
+              <v-icon
+                :icon="
+                  entryProps.coin.price_change_percentage_24h > 0
+                    ? 'mdi-trending-up'
+                    : 'mdi-trending-down'
+                "
+                :color="
+                  entryProps.coin.price_change_percentage_24h > 0
+                    ? 'success'
+                    : 'error'
+                "
+              />
+              <p
+                class="ml-2 text-body-1"
+                :class="
+                  entryProps.coin.price_change_percentage_24h > 0
+                    ? 'text-success'
+                    : 'text-error'
+                "
+              >
+                {{
+                  entryProps.coin.price_change_percentage_24h > 0
+                    ? "+" +
+                      entryProps.coin.price_change_percentage_24h.toFixed(2) +
+                      "%"
+                    : entryProps.coin.price_change_percentage_24h.toFixed(2) +
+                      "%"
+                }}
+              </p>
+              <p class="ml-2">24h</p>
+            </v-chip>
           </v-card-text>
-          <v-card-text class="py-0 d-flex align-center">
+          <v-card-text class="pt-0 pb-1 d-flex align-center">
             <v-chip
               prepend-icon="mdi-chart-box-outline"
               density="compact"

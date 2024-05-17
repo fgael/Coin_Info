@@ -54,10 +54,12 @@ export const convertCurrency = (price: number | string) => {
       currency,
       minimumFractionDigits,
     });
-  } else {
+  } else if (price) {
     return price.toLocaleString(locale, {
       style: "currency",
       currency,
     });
+  } else {
+    return;
   }
 };

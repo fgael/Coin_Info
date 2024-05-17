@@ -14,9 +14,12 @@
         </router-link>
       </v-toolbar-title>
     </v-app-bar-title>
-    <v-dialog max-width="500">
+    <v-chip :prepend-icon="apiIcon" :color="apiOnline ? 'green' : 'red'">
+      {{ apiStatusText }}
+    </v-chip>
+    <v-dialog :max-width="500">
       <template v-slot:activator="{ props: activatorProps }">
-        <v-btn v-bind="activatorProps" icon="mdi-magnify" class="mr-2" />
+        <v-btn v-bind="activatorProps" icon="mdi-magnify" class="ml-2" />
       </template>
       <template v-slot:default="{ isActive }">
         <v-card class="rounded-lg">
@@ -27,10 +30,6 @@
         </v-card>
       </template>
     </v-dialog>
-
-    <v-chip :prepend-icon="apiIcon" :color="apiOnline ? 'green' : 'red'">
-      {{ apiStatusText }}
-    </v-chip>
     <v-app-bar-nav-icon
       class="mx-2"
       variant="text"
