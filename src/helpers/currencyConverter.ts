@@ -1,49 +1,63 @@
 import { useCurrencyStore } from "@/stores/currency";
 
-export const convertCurrency = (price: number) => {
+export const convertCurrency = (price: number | string) => {
   const currencyStore = useCurrencyStore();
   const currentCurrency = currencyStore.currency;
+
+  // Function to determine minimumFractionDigits dynamically
+  const getMinimumFractionDigits = (value: number) => {
+    const decimalCount = value.toString().split(".")[1]?.length || 0;
+    return Math.max(2, decimalCount);
+  };
+
+  // Default locale and currency for formatting
+  let locale = "en-US";
+  let currency = "USD";
+
+  // Determine locale and currency based on currentCurrency
   switch (currentCurrency) {
     case "eur":
-      return price.toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      });
-    case "usd":
-    default:
-      return price.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      });
+      locale = "fr-FR";
+      currency = "EUR";
+      break;
     case "gbp":
-      return price.toLocaleString("en-GB", {
-        style: "currency",
-        currency: "GBP",
-      });
+      locale = "en-GB";
+      currency = "GBP";
+      break;
     case "rub":
-      return price.toLocaleString("ru-RU", {
-        style: "currency",
-        currency: "RUB",
-      });
+      locale = "ru-RU";
+      currency = "RUB";
+      break;
     case "twd":
-      return price.toLocaleString("zh-TW", {
-        style: "currency",
-        currency: "TWD",
-      });
+      locale = "zh-TW";
+      currency = "TWD";
+      break;
     case "cny":
-      return price.toLocaleString("zh-CN", {
-        style: "currency",
-        currency: "CNY",
-      });
+      locale = "zh-CN";
+      currency = "CNY";
+      break;
     case "jpy":
-      return price.toLocaleString("ja-JP", {
-        style: "currency",
-        currency: "JPY",
-      });
+      locale = "ja-JP";
+      currency = "JPY";
+      break;
     case "inr":
-      return price.toLocaleString("en-IN", {
-        style: "currency",
-        currency: "INR",
-      });
+      locale = "en-IN";
+      currency = "INR";
+      break;
+  }
+
+  // Apply the same logic for formatting based on locale and currency
+  if (typeof price === "number" && price < 0.01) {
+    const minimumFractionDigits = getMinimumFractionDigits(price);
+    return price.toLocaleString(locale, {
+      style: "currency",
+      currency,
+      minimumFractionDigits,
+    });
+  } else {
+    return price.toLocaleString(locale, {
+      style: "currency",
+      currency,
+    });
   }
 };

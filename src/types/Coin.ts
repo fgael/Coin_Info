@@ -28,7 +28,7 @@ export interface CoinFromID {
     fully_diluted_valuation: { [key: string]: number };
     circulating_supply: number;
     total_supply: number;
-    max_supply: any;
+    max_supply: number | string;
     price_change_percentage_24h: number;
     price_change_24h: number;
     market_cap_rank: number;

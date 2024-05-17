@@ -10,13 +10,18 @@
           elevation="0"
           v-bind="props"
         >
-          <v-card-title class="d-flex align-center">
-            <v-avatar density="compact" class="mr-2 my-1">
-              <v-img :src="entryProps.coin.image" />
-            </v-avatar>
-            {{ entryProps.coin.name }}
-            <v-chip label density="comfortable" size="small" class="ml-2">
-              #{{ entryProps.coin.market_cap_rank }}
+          <v-card-title class="d-flex align-center justify-space-between">
+            <div>
+              <v-avatar density="compact" class="mr-2 my-1">
+                <v-img :src="entryProps.coin.image" />
+              </v-avatar>
+              {{ entryProps.coin.name }}
+              <v-chip label density="comfortable" size="small" class="ml-2">
+                #{{ entryProps.coin.market_cap_rank }}
+              </v-chip>
+            </div>
+            <v-chip prepend-icon="mdi-clock-outline" label>
+              <p class="text-caption">24h Value</p>
             </v-chip>
           </v-card-title>
           <v-card-text class="d-flex align-center">
@@ -52,6 +57,15 @@
                   : entryProps.coin.price_change_percentage_24h.toFixed(2) + "%"
               }}
             </p>
+          </v-card-text>
+          <v-card-text class="py-0 d-flex align-center">
+            <v-chip
+              prepend-icon="mdi-chart-box-outline"
+              density="compact"
+              label
+            >
+              <p class="text-caption">7d Change Sparkline</p>
+            </v-chip>
           </v-card-text>
           <v-sparkline
             :fill="fill"
@@ -117,6 +131,6 @@ const percentageValue = computed(() => {
 
 <style scoped>
 .hover-border {
-  border: 4px solid rgba(128, 128, 128, 0.479);
+  border: 4px solid rgba(200, 200, 200, 0.5);
 }
 </style>
