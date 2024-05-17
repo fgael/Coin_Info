@@ -11,11 +11,13 @@
           v-bind="props"
         >
           <v-card-title class="d-flex align-center justify-space-between">
-            <div>
+            <div class="d-flex align-center">
               <v-avatar density="compact" class="mr-2 my-1">
                 <v-img :src="entryProps.coin.image" />
               </v-avatar>
-              {{ entryProps.coin.name }}
+              <div class="ml-1">
+                {{ entryProps.coin.name }}
+              </div>
               <v-chip label density="comfortable" size="small" class="ml-2">
                 #{{ entryProps.coin.market_cap_rank }}
               </v-chip>
