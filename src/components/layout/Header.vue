@@ -27,8 +27,8 @@
   <v-navigation-drawer
     v-model="drawer"
     :width="xs ? width : '200'"
-    :scrim="false"
     :location="xs ? 'left' : 'right'"
+    disable-resize-watcher
   >
     <v-list density="compact">
       <v-select

@@ -76,6 +76,7 @@
             :model-value="entryProps.coin?.sparkline_in_7d?.price"
             :padding="padding"
             :smooth="smooth"
+            class="px-2"
             height="40"
             auto-draw
           />

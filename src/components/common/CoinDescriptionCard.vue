@@ -6,7 +6,7 @@
           <v-icon icon="mdi-information" color="green" class="my-2" />
           <p class="ml-2">About {{ entryProps.coin?.symbol.toUpperCase() }}</p>
         </v-card-title>
-        <v-card-text style="overflow: auto; max-height: 206px">
+        <v-card-text>
           <div
             style="white-space: pre-line"
             v-html="entryProps.coin?.description?.en"
