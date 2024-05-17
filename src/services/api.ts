@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { emitter } from "../mitt";
 import router from "@/router";
+import { CoinFromListRenderAPI } from "@/types/Coin";
 
 const cacheWrapper = (apiFunction: (...args: any[]) => Promise<any>) => {
   const cache: { [key: string]: { data: any; timestamp: number } } = {};
@@ -73,3 +74,17 @@ export const fetchCoin = cacheWrapper(
     return response.data;
   }
 );
+
+export const fetchCoinListRenderAPI = async (): Promise<
+  CoinFromListRenderAPI[]
+> => {
+  try {
+    const response = await axios.get(
+      "https://coin-info-json-server.onrender.com/items"
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};

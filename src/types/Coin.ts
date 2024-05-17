@@ -14,6 +14,12 @@ export interface CoinFromList {
   };
 }
 
+export interface CoinFromListRenderAPI {
+  id: string;
+  symbol: string;
+  name: string;
+}
+
 export interface CoinFromID {
   id: string;
   symbol: string;

@@ -14,6 +14,20 @@
         </router-link>
       </v-toolbar-title>
     </v-app-bar-title>
+    <v-dialog max-width="500">
+      <template v-slot:activator="{ props: activatorProps }">
+        <v-btn v-bind="activatorProps" icon="mdi-magnify" class="mr-2" />
+      </template>
+      <template v-slot:default="{ isActive }">
+        <v-card class="rounded-lg">
+          <v-card-text class="d-flex align-center">
+            <CoinSelector @close-dialog="isActive.value = false" />
+            <v-btn icon="mdi-close" @click="isActive.value = false"></v-btn>
+          </v-card-text>
+        </v-card>
+      </template>
+    </v-dialog>
+
     <v-chip :prepend-icon="apiIcon" :color="apiOnline ? 'green' : 'red'">
       {{ apiStatusText }}
     </v-chip>
@@ -81,6 +95,7 @@ import { useDisplay } from "vuetify";
 import { useTheme } from "vuetify";
 import { emitter } from "@/mitt";
 import { useCurrencyStore } from "@/stores/currency";
+import CoinSelector from "@/components/common/CoinSelector.vue";
 
 const theme = useTheme();
 const currencyStore = useCurrencyStore();
