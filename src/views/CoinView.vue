@@ -7,7 +7,7 @@
         </v-btn>
       </v-col>
       <v-col cols="12" lg="4" class="pa-2 pa-sm-3">
-        <CoinCard :coin="coinFromList" />
+        <CoinCard :coin="coinFromList" :home-view="false" />
         <div class="py-2 py-sm-3" />
         <CoinInfoTable :coin="coinFromID" />
         <div class="py-2 py-sm-3" />
@@ -45,8 +45,10 @@ const coinFromID = ref<CoinFromID | null>(null);
 const coinFromList = ref<CoinFromList | null>(null);
 const sparkline = ref<number[] | null>(null);
 
+const route = useRoute();
+
 onMounted(async () => {
-  const routeParamsId = useRoute().params.id;
+  const routeParamsId = route.params.id;
   coinId.value = Array.isArray(routeParamsId)
     ? routeParamsId[0]
     : routeParamsId;
@@ -69,7 +71,6 @@ onMounted(async () => {
       },
     };
   }
-
   if (coinFromID.value?.market_data?.sparkline_7d?.price) {
     sparkline.value = coinFromID.value?.market_data?.sparkline_7d?.price;
   }

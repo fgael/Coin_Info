@@ -1,6 +1,6 @@
 <template>
-  <v-container class="pa-0">
-    <v-infinite-scroll mode="manual" @load="load">
+  <v-container class="pa-0" fluid>
+    <v-infinite-scroll mode="manual" class="px-4" @load="load">
       <template v-slot:default>
         <v-row no-gutters>
           <v-col
@@ -9,13 +9,13 @@
             cols="12"
             lg="4"
             md="6"
-            class="px-4 py-4"
+            class="px-lg-4 px-md-2 px-0 py-lg-4 py-2"
           >
             <router-link
               :to="{ name: 'CoinView', params: { id: coin.id } }"
               class="text-decoration-none"
             >
-              <CoinCard :coin="coin" />
+              <CoinCard :coin="coin" :home-view="true" />
             </router-link>
           </v-col>
         </v-row>
@@ -30,11 +30,7 @@
         </v-btn>
       </template>
       <template v-slot:loading>
-        <v-progress-circular
-          indeterminate
-          :size="40"
-          color="green-darken-1"
-        ></v-progress-circular>
+        <v-progress-circular indeterminate :size="40" color="green-darken-1" />
       </template>
       <template v-slot:error="{ props }">
         <v-alert type="error" color="red-darken-1">

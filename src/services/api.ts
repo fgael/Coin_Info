@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { emitter } from "../mitt";
+import router from "@/router";
 
 const cacheWrapper = (apiFunction: (...args: any[]) => Promise<any>) => {
   const cache: { [key: string]: { data: any; timestamp: number } } = {};
@@ -20,8 +21,12 @@ const cacheWrapper = (apiFunction: (...args: any[]) => Promise<any>) => {
       return response;
     } catch (error: any) {
       console.error("An error occurred during the API request:", error);
+      if (error.code === "ERR_BAD_REQUEST") {
+        router.push({ name: "NotFoundView" });
+      }
       if (error.code === "ERR_NETWORK") {
         emitter.emit("networkError");
+        router.push({ name: "RateLimitView" });
       }
       return null;
     }
