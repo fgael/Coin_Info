@@ -13,7 +13,6 @@
       hide-details
       clearable
       variant="outlined"
-      active
       return-object
       :loading="isLoading"
       color="green"
@@ -51,17 +50,18 @@ const handleSearchWithDebounce = async (newSearch: string) => {
     searchQuery.value = newSearch;
     if (newSearch) {
       handleSearch(newSearch);
+      isLoading.value = false;
     } else {
       filteredItems.value = [];
+      isLoading.value = false;
     }
-  }, 500);
+  }, 200);
 };
 
 const handleSearch = (newSearch: string) => {
   filteredItems.value = coinList.value.filter((item) =>
     item.name.toLowerCase().includes(newSearch.toLowerCase())
   );
-  isLoading.value = false;
 };
 
 watch(selectedItem, (newSelectedItem) => {
