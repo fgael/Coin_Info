@@ -7,13 +7,16 @@
       item-value="id"
       placeholder="Search for a coin ex: Bitcoin"
       label="Search for a coin"
-      hide-details
-      clearable
-      variant="outlined"
       :no-data-text="
         searchQuery.length >= 1 ? 'No results found' : 'Start typing to search'
       "
+      hide-details
+      clearable
+      variant="outlined"
+      active
       return-object
+      :loading="isLoading"
+      color="green"
       @update:search="handleSearchWithDebounce"
       @update:model-value="$emit('close-dialog')"
     ></v-autocomplete>
@@ -21,33 +24,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { fetchCoinListRenderAPI } from "@/services/api";
 import { CoinFromListRenderAPI } from "@/types/Coin";
 import router from "@/router";
 
 const selectedItem = ref<CoinFromListRenderAPI | null>(null);
-const items = ref<CoinFromListRenderAPI[]>([]);
+const coinList = ref<CoinFromListRenderAPI[]>([]);
 const filteredItems = ref<CoinFromListRenderAPI[]>([]);
 const searchQuery = ref("");
+const isLoading = ref(false);
 
 let debounceTimeout: NodeJS.Timeout | null = null;
 
-const fetchCoinList = async () => {
+const handleSearchWithDebounce = async (newSearch: string) => {
+  isLoading.value = true;
   try {
-    items.value = await fetchCoinListRenderAPI();
+    coinList.value = await fetchCoinListRenderAPI();
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-};
-
-onMounted(fetchCoinList);
-
-const handleSearchWithDebounce = (newSearch: string) => {
   if (debounceTimeout) {
     clearTimeout(debounceTimeout);
   }
-
   debounceTimeout = setTimeout(() => {
     searchQuery.value = newSearch;
     if (newSearch) {
@@ -59,9 +58,10 @@ const handleSearchWithDebounce = (newSearch: string) => {
 };
 
 const handleSearch = (newSearch: string) => {
-  filteredItems.value = items.value.filter((item) =>
+  filteredItems.value = coinList.value.filter((item) =>
     item.name.toLowerCase().includes(newSearch.toLowerCase())
   );
+  isLoading.value = false;
 };
 
 watch(selectedItem, (newSelectedItem) => {

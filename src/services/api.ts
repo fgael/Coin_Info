@@ -80,7 +80,7 @@ export const fetchCoinListRenderAPI = async (): Promise<
 > => {
   try {
     const response = await axios.get(
-      "https://coin-info-json-server.onrender.com/items"
+      "https://coin-info-json-server.onrender.com/coins"
     );
     return response.data;
   } catch (error) {
