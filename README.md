@@ -42,3 +42,5 @@ pnpm build
 ### Customize configuration
 
 See [Configuration Reference](https://vitejs.dev/config/).
+
+coininfo.digicarib.com
