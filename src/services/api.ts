@@ -75,13 +75,12 @@ export const fetchCoin = cacheWrapper(
   }
 );
 
-export const fetchCoinListRenderAPI = async (): Promise<
+export const fetchCoinListStaticAPI = async (): Promise<
   CoinFromListRenderAPI[]
 > => {
   try {
-    const response = await axios.get(
-      "https://coin-info-json-server.onrender.com/coins"
-    );
+    const response = await axios.get("http://141.94.22.42:50001/coins");
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);

@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted } from "vue";
-import { fetchCoinListRenderAPI } from "@/services/api";
+import { fetchCoinListStaticAPI } from "@/services/api";
 import { CoinFromListRenderAPI } from "@/types/Coin";
 import router from "@/router";
 
@@ -35,7 +35,7 @@ let debounceTimeout: NodeJS.Timeout | null = null;
 
 const fetchCoinList = async () => {
   try {
-    const response = await fetchCoinListRenderAPI();
+    const response = await fetchCoinListStaticAPI();
     coinList.value = response;
     localStorage.setItem("coinList", JSON.stringify(response));
   } catch (error) {
