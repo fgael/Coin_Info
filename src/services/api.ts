@@ -79,7 +79,7 @@ export const fetchCoinListStaticAPI = async (): Promise<
   CoinFromListRenderAPI[]
 > => {
   try {
-    const response = await axios.get("http://141.94.22.42:50001/coins");
+    const response = await axios.get("/api/coininfo/coins");
     console.log(response);
     return response.data;
   } catch (error) {
