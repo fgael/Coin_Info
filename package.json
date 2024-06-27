@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "deploy": "npm run build && xmit coininfo.xmit.dev@48",
+    "deploy": "npm run build",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
